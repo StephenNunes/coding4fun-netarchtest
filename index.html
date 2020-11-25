@@ -25,29 +25,180 @@
                 </section>
                 <section data-markdown>
                     <textarea data-template>
-                        Slides : <https://github.com/StephenNunes/coding4fun-netarchtest>
-                    </textarea>
-                </section>
-                <section data-markdown>
-                    <textarea data-template>
+                        Slides : <https://github.com/StephenNunes/coding4fun-netarchtest>  
+                        
                         Repo : <https://github.com/BenMorris/NetArchTest>
                     </textarea>
                 </section>
                 <section data-markdown>
                     <textarea data-template>
-                        # NetArchTest
-                        Test library
-                        Test architecture of projects                        
+                        ### NetArchTest
+                        
+                        Fluent test library for .NET  
+                        
+                        Minimum : Net Framework 4.6.1 and .Net Core 2.0      
                     </textarea>
                 </section>
                 <section data-markdown>
                     <textarea data-template>
-                        # NetArchTest
-                        Test library
-                        Test architecture of projects                        
+                        Inspired by ArchUnit from Java
                     </textarea>
                 </section>
-				
+				<section data-markdown>
+                    <textarea data-template>
+                        Test architecture of projects  
+                          
+                        Guarantee following architecture guidelines during life of the project
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        * Many developers  
+                        * Long time  
+                        * New best practices  
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ### How-to  
+                        
+                        Using rules  
+                        
+                        Example :  
+                        ``` csharp
+                        bool result = Types.InAssembly(typeof(CakeViewModel).Assembly)
+                            .That()
+                            .ResideInNamespace("MyAwesomeApplication.PresentationLayer.ViewModels")
+                            .ShouldNot()
+                            .HaveDependencyOn("MyAwesomeApplication.DataAccessLayer")
+                            .GetResult()
+                            .IsSuccessful;
+                        ```
+                    </textarea>
+                </section>
+                
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 1/6
+                        
+                        ``` csharp
+                        Types.InAssembly(typeof(CakeViewModel).Assembly).That()
+                        ```
+                        
+                        Load list of classes/interfaces from the concerned assembly  
+                        Be able to target namespace or path
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 2/6
+                        
+                        ``` csharp
+                        .ResideInNamespace("MyAwesomeApplication.PresentationLayer.ViewModels")
+                        ```
+                        Filter by using predicates  
+                        
+                        .And() and .Or() can be used to chain them
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 3/6
+                        
+                        ``` csharp
+                        .ResideInNamespace()
+                        .AreInterfaces()
+                        .AreClasses()
+                        ```
+                        
+                        List of predicates here : <https://github.com/BenMorris/NetArchTest/blob/master/src/NetArchTest.Rules/Predicates.cs>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 4/6
+                        
+                        ``` csharp
+                        .ShouldNot()
+                        ```
+                        
+                        Indicate how to resolve the condition with .Should() or .ShouldNot()
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 5/6
+                        
+                        ``` csharp
+                        .BeClasses()
+                        .ResideInNamespace()
+                        ```
+                        
+                        List of conditions here : <https://github.com/BenMorris/NetArchTest/blob/master/src/NetArchTest.Rules/Conditions.cs>
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Details 6/6
+                        
+                        ``` csharp
+                        .GetResult()
+                        .IsSuccessful()
+                        ```
+                        
+                        Get the result in a boolean type
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Writing your own rule (for predicates and conditions)  
+                        
+                        ``` csharp
+                        public class CustomRule : ICustomRule
+                        {
+                            public bool MeetsRule(TypeDefinition type)
+                            {
+                                return true;
+                            }
+                        }
+                        ```
+                        
+                        ``` csharp
+                        var myRule = new CustomRule();
+
+                        result = Types.InCurrentDomain()
+                            .That().AreClasses()
+                            .Should()
+                            .MeetCustomRule(myRule)
+                            .GetResult().IsSuccessful;
+                        ```                  
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        Use Policies to group rules
+                        
+                        ``` csharp
+                        var architecturePolicy = Policy.Define("Passing Policy", "This policy demonstrated a valid passing policy with reasonable rules")
+                            .For(Types.InCurrentDomain)
+                            .Add(t =>
+                               t.That()
+                               .ResideInNamespace("NetArchTest.SampleLibrary.Presentation")
+                               .ShouldNot()
+                               .HaveDependencyOn("NetArchTest.SampleLibrary.Data"),
+                               "Enforcing layered architecture", "Controllers should not directly reference repositories"
+                            )
+                            .Add(t =>
+                                t.That().HaveDependencyOn("System.Data")
+                                .And().ResideInNamespace(("ArchTest"))
+                                .Should().ResideInNamespace("NetArchTest.SampleLibrary.Data"),
+                                "Controlling external dependencies", "Only classes in the data namespace can have a dependency on System.Data"
+                            )
+                        ```
+                        Evaluate the rules of the policy by method .Evaluate()                 
+                    </textarea>
+                </section>
+                
 			</div>
 		</div>
 
