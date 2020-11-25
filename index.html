@@ -171,7 +171,9 @@
                             .Should()
                             .MeetCustomRule(myRule)
                             .GetResult().IsSuccessful;
-                        ```                  
+                        ```
+
+                         Check library <https://github.com/jbevain/cecil/tree/master/Mono.Cecil>
                     </textarea>
                 </section>
                 <section data-markdown>
@@ -198,7 +200,82 @@
                         Evaluate the rules of the policy by method .Evaluate()                 
                     </textarea>
                 </section>
-                
+                <section data-markdown>
+                    <textarea data-template>
+                        Coding time                 
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        * Visual studio code (or your favorite text editor)
+                        * Git
+                        * .NET core 3.1
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        git clone <https://github.com/StephenNunes/coding4fun-netarchtest>                
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        To build project (.csproj)  
+                        `dotnet build`  
+                        
+                        To run mstest  
+                        `dotnet test`
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 1
+                        
+                        Test if View models classes do not reference classes contains into DataAccessLayer
+                        (MyAwesomeApplication\DataAccessLayer)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 2
+                        
+                        Test if View classes get their name ends by "View"
+                        (MyAwesomeApplication\PresentationLayer\Views)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 3
+                        
+                        Test if View models classes implements INotifyPropertyChanged
+                        (MyAwesomeApplication\PresentationLayer\ViewModels)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 4
+                        
+                        Test if Repository classes (locate them by namespace instead of Assembly) get their name ends by "Repository"
+                        (MyAwesomeApplication\PresentationLayer\DataAccessLayer)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 5
+                        
+                        Create your own rule which verify that Factory classes got at least one method which begin with "Create"
+                        (NetArchTest use Mono.Cecil library for reflection, check it here : <https://github.com/jbevain/cecil/tree/master/Mono.Cecil>)
+                        (MyAwesomeApplication\PresentationLayer\BusinessLayer)
+                    </textarea>
+                </section>
+                <section data-markdown>
+                    <textarea data-template>
+                        ## Step 6
+                        
+                        Create a policy of rules created in Step 2 and Step 3
+                        (MyAwesomeApplication\PresentationLayer\Views)
+                        (MyAwesomeApplication\PresentationLayer\ViewModels)
+                    </textarea>
+                </section>
 			</div>
 		</div>
 

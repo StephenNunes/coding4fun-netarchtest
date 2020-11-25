@@ -10,3 +10,8 @@ tmp/**
 node_modules/
 .sass-cache
 dist/*.map
+*.suo
+*.user
+bin
+obj
+packages
